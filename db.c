@@ -81,4 +81,17 @@ struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a 
 };
 
 
+struct Row* select (struct Row* all, void * data) {
+
+    if(all == NULL)
+        return NULL;
+
+    while (all->next != NULL && strcmp(all->properties->data, data) == 0) {
+        printProperty(all->properties);
+        all = all->next;
+    }
+
+};
+
+
 
