@@ -62,3 +62,23 @@ struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
     return all;
 };
 
+
+struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a data or a propert? */
+    
+    if (all == NULL)
+        return NULL;
+
+    while(all->next != NULL) {
+        if(strcmp(all->properties->table_field->field_name, MyFieldName) == 0) {
+            struct Property * tmp;
+            tmp = all->properties->next->next;
+            free(all->properties->next);
+            all->properties->next = tmp;
+        }
+    }
+
+    return all;
+};
+
+
+
