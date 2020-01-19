@@ -1,0 +1,3 @@
+/home/negin/CLionProjects/DataBase/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/negin/CLionProjects/DataBase/cmake-build-debug/CMakeFiles/DataBase.dir
+/home/negin/CLionProjects/DataBase/cmake-build-debug/CMakeFiles/edit_cache.dir

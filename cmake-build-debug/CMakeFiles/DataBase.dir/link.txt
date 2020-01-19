@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/DataBase.dir/main.c.o CMakeFiles/DataBase.dir/db.c.o CMakeFiles/DataBase.dir/structres.c.o  -o DataBase 
