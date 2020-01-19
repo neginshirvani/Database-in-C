@@ -14,7 +14,15 @@ struct TableField {
 struct Property {
     struct TableField * table_field;
     void * data;
+    struct Property* next;
 };
+
+struct Row {
+    struct Property* properties;
+    struct Row* next;
+};
+
+
 
 void printProperty(struct Property *p) {
     if(p->table_field->field_type == 0) {
@@ -28,10 +36,29 @@ void printProperty(struct Property *p) {
 }
 
 
-struct *Property insert(struct Property *p, char* MyFieldName) {
-    struct Property * new_property;
-    strcpy(new_property->table_field->field_name, MyFieldName);
+struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
+    struct Row* new_row;
+    strcpy(new_row->properties->table_field->field_name, MyFieldName);
+    if(all->properties->table_field->field_type == 0)
+        new_row->properties->data = *(int *)(Mydata);
+    else if(all->properties->table_field->field_type == 1)
+        new_row->properties->data = *(char **)(Mydata);
 
+    new_row->next = NULL;
 
+    if(all->next == NULL)
+        return new_row;
+
+    if(strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
+        new_row->next = all;
+        return new_row;
+    }
+
+    while(all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1)
+        all = all->next;
+
+    new_row->next = all->next;
+    all->next = new_row;
+    return all;
 };
 
