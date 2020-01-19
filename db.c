@@ -64,7 +64,7 @@ struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
 
 
 struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a data or a propert? */
-    
+
     if (all == NULL)
         return NULL;
 

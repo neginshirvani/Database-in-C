@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "db.c"
+//#include "db.c"
 
 
 
 int main() {
-    struct Property * p1 = malloc(sizeof(struct Property));
+    /**struct Property * p1 = malloc(sizeof(struct Property));
     p1->table_field = (struct TableField *) malloc(sizeof(struct TableField));
     strcpy(p1->table_field->field_name, "score");
     p1->table_field->field_type = 0;
@@ -28,5 +28,5 @@ int main() {
     strcpy(*name, "ali");
     p2->data = name;
 
-    printProperty(p2);
+    printProperty(p2);*/
 }
