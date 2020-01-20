@@ -3,4 +3,4 @@ project(DataBase C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(DataBase main.c db.c cmake-build-debug/structres.c)
+add_executable(DataBase main.c db.c cmake-build-debug/structres.c db.h)

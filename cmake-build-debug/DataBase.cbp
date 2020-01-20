@@ -84,6 +84,9 @@
 		<Unit filename="/home/negin/CLionProjects/DataBase/db.c">
 			<Option target="DataBase"/>
 		</Unit>
+		<Unit filename="/home/negin/CLionProjects/DataBase/db.h">
+			<Option target="DataBase"/>
+		</Unit>
 		<Unit filename="/home/negin/CLionProjects/DataBase/main.c">
 			<Option target="DataBase"/>
 		</Unit>

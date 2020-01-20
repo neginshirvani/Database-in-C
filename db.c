@@ -27,6 +27,10 @@ struct Row { /** the whole database */
     struct Row* next;
 };
 
+struct Table {
+    char table_name[20];
+    struct Row* the_rows;
+};
 
 
 void printProperty(struct Property *p) {
@@ -63,7 +67,7 @@ struct Property* CreateThing() {
 };
 
 
-/**struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata) {
+struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata) {
     struct Property * new_property;
     strcpy(new_property->table_field->field_name, MyFieldName);
     if (new_property->table_field->field_type == 0)
@@ -86,7 +90,7 @@ struct Property* CreateThing() {
     new_property->next = all->properties->next;
     all->properties->next = new_property;
     return all;
-}*/
+}
 
 
 
@@ -148,5 +152,44 @@ struct Row* selectt (struct Row* all, void * data) {
 
 };
 
+char prefix(const char *pre, const char *str){
+    return strncmp(pre, str, strlen(pre)) == 0;
+}
+
+void execcQuery(char *query){
+    // starts with "insert"
+    int len = strlen(query);
+    char *p1, *p2;
+    char temp[100];
+
+    if(prefix("insertTo", query)){
+        p2 = p1 = query + 9;
+        while(*p2 != ' ') p2++;
+        char *table_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+        strncpy(table_name, p1, p2 - p1);
+        //printf(table_name);
+
+        p2 = p1 = p2+1;
+        while(*p2){
+            while(*p2 != '=') p2++;
+            char *field_name;
+            //for(int i = 0 ; i < p2; i++) {
+            field_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+            strncpy(field_name, p1, p2 - p1);
+            printf(field_name);
+
+            p2 = p1 = p2+1;
+            while(*p2 && *p2 != ',') p2++;
+            char *data;
+            //for(int i = 0 ; i < p2; i++) {
+            data = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+            strncpy(data, p1, p2 - p1);
+            printf(data);
+            if(*p2)
+                p2 = p1 = p2+1;
+            }
+//        }
+    }
+}
 
 
