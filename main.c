@@ -2,31 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 //#include "db.c"
-
+//#include "menu.c"
+#define green "\033[1;32m"
+#define blue  "\033[1;34m"
 
 
 int main() {
-    /**struct Property * p1 = malloc(sizeof(struct Property));
-    p1->table_field = (struct TableField *) malloc(sizeof(struct TableField));
-    strcpy(p1->table_field->field_name, "score");
-    p1->table_field->field_type = 0;
+    int user_chose;
+    printf("%s1. Create a new Table!\n", green);
+    printf("%s2. Insert a property to the Table!\n", green);
+    printf("%s3. Delete a property to the Table!\n", green);
+    printf("%s4. Edit a property to the Table!\n", green);
+    printf("%s5. Find a property to the Table!\n", green);
+    printf("\n");
 
-    int *score = malloc(sizeof(int));
-    *score = 5;
-    p1->data = score;
+    printf("%sWhat you wanna do?...\n", blue);
+    scanf("%d", &user_chose);
+    //menu();
 
-    printProperty(p1);
-
-
-    struct Property * p2 = malloc(sizeof(struct Property));
-    p2->table_field = (struct TableField *) malloc(sizeof(struct TableField));
-    strcpy(p2->table_field->field_name, "name");
-    p2->table_field->field_type = 1;
-
-    char **name = malloc(sizeof(char *));
-    *name = malloc(10 * sizeof(char));
-    strcpy(*name, "ali");
-    p2->data = name;
-
-    printProperty(p2);*/
 }
