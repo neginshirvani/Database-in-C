@@ -45,15 +45,15 @@ void printProperty(struct Property *p) {
 }
 
 
-struct Row* CreatATable() {
-    struct Row *new_row = malloc(sizeof(struct Row));
+struct Table* CreatATable() {
+    struct Table *new_table = malloc(sizeof(struct Table));
 
-    new_row->properties = (struct Property*)malloc(sizeof(struct Property));
-    new_row->properties->table_field = (struct TableField*)malloc(sizeof(struct TableField));
+    new_table->the_rows = (struct Row*)malloc(sizeof(struct Row));
+    new_table->the_rows->properties = (struct Property*)malloc(sizeof(struct Property));
 
-    new_row->next = NULL;
+    new_table->the_rows->properties->next = NULL;
 
-    return new_row;
+    return new_table;
 
 };
 
@@ -67,60 +67,80 @@ struct Property* CreateThing() {
 };
 
 
-struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata) {
-    struct Property * new_property;
-    strcpy(new_property->table_field->field_name, MyFieldName);
-    if (new_property->table_field->field_type == 0)
-        new_property->data = *(int *)(Mydata);
-    else if(new_property->table_field->field_type == 1)
-        new_property->data = *(char **)(Mydata);
+//struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata) {
+//    struct Property * new_property;
+//    strcpy(new_property->table_field->field_name, MyFieldName);
+//    if (new_property->table_field->field_type == 0)
+//        new_property->data = *(int *)(Mydata);
+//    else if(new_property->table_field->field_type == 1)
+//        new_property->data = *(char **)(Mydata);
+//
+//    new_property->next = NULL;
+//
+//    if(all->next == NULL)
+//        return new_property;
+//    if (strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
+//        new_property->next = all->properties->next;
+//    }
+//
+//    while (all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1) {
+//        all->properties = all->properties->next;
+//    }
+//
+//    new_property->next = all->properties->next;
+//    all->properties->next = new_property;
+//    return all;
+//}
 
-    new_property->next = NULL;
 
-    if(all->next == NULL)
-        return new_property;
-    if (strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
-        new_property->next = all->properties->next;
-    }
 
-    while (all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1) {
-        all->properties = all->properties->next;
-    }
+//struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
+//
+//    struct Row* new_row;
+//    strcpy(new_row->properties->table_field->field_name, MyFieldName);
+//    if(all->properties->table_field->field_type == 0)
+//        new_row->properties->data = *(int *)(Mydata);
+//    else if(all->properties->table_field->field_type == 1)
+//        new_row->properties->data = *(char **)(Mydata);
+//
+//    new_row->next = NULL;
+//
+//    if(all->next == NULL)
+//        return new_row;
+//
+//    if(strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
+//        new_row->next = all;
+//        return new_row;
+//    }
+//
+//    while(all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1)
+//        all = all->next;
+//
+//    new_row->next = all->next;
+//    all->next = new_row;
+//    return all;
+//};
 
-    new_property->next = all->properties->next;
-    all->properties->next = new_property;
-    return all;
+
+
+struct Table* insert(struct Table* the_table, char *query) {
+    struct Table * execcQuery();
+    struct Table* NewTable = (struct Table*)malloc(sizeof(struct Table));
+    NewTable = execcQuery(query);
+
+    if(the_table->the_rows->next == NULL)
+        return NewTable;
+
+    while (the_table->the_rows->next != NULL)
+        the_table->the_rows = the_table->the_rows->next;
+
+    NewTable->the_rows->next = the_table->the_rows->next;
+    the_table->the_rows->next = NewTable;
+    return the_table;
+
+    the_table->the_rows->next = NewTable->the_rows;
+
 }
-
-
-
-struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
-
-    struct Row* new_row;
-    strcpy(new_row->properties->table_field->field_name, MyFieldName);
-    if(all->properties->table_field->field_type == 0)
-        new_row->properties->data = *(int *)(Mydata);
-    else if(all->properties->table_field->field_type == 1)
-        new_row->properties->data = *(char **)(Mydata);
-
-    new_row->next = NULL;
-
-    if(all->next == NULL)
-        return new_row;
-
-    if(strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
-        new_row->next = all;
-        return new_row;
-    }
-
-    while(all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1)
-        all = all->next;
-
-    new_row->next = all->next;
-    all->next = new_row;
-    return all;
-};
-
 
 struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a data or a propert? */
 
@@ -156,10 +176,13 @@ char prefix(const char *pre, const char *str){
     return strncmp(pre, str, strlen(pre)) == 0;
 }
 
-void execcQuery(char *query){
+char *p1, *p2;
+
+struct Table* execcQuery(char *query){
     // starts with "insert"
     int len = strlen(query);
-    char *p1, *p2;
+    struct Table * the_table;
+
     char temp[100];
 
     if(prefix("insertTo", query)){
@@ -167,6 +190,10 @@ void execcQuery(char *query){
         while(*p2 != ' ') p2++;
         char *table_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
         strncpy(table_name, p1, p2 - p1);
+
+        strcpy(the_table->table_name, table_name);
+
+
         //printf(table_name);
 
         p2 = p1 = p2+1;
@@ -176,20 +203,28 @@ void execcQuery(char *query){
             //for(int i = 0 ; i < p2; i++) {
             field_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
             strncpy(field_name, p1, p2 - p1);
-            printf(field_name);
+            strcpy(the_table->the_rows->properties->table_field->field_name, field_name);
+            the_table->the_rows = the_table->the_rows->properties->next;
+
+
 
             p2 = p1 = p2+1;
             while(*p2 && *p2 != ',') p2++;
             char *data;
-            //for(int i = 0 ; i < p2; i++) {
+
             data = (char *) malloc((p2 - p1 + 1) * sizeof(char));
             strncpy(data, p1, p2 - p1);
-            printf(data);
+            strcpy(the_table->the_rows->properties->data, data);
+            the_table->the_rows = the_table->the_rows->properties->next;
+            //printf(data);
             if(*p2)
                 p2 = p1 = p2+1;
             }
-//        }
+
     }
+    the_table->the_rows->next = NULL;
+    return the_table;
+
 }
 
 

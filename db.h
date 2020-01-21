@@ -20,6 +20,7 @@ struct Row* deletee(struct Row* all, char * MyFieldName);
 struct Row* selectt (struct Row* all, void * data);
 
 char prefix(const char *pre, const char *str);
-void execcQuery(char *query);
+
+struct Table* execcQuery(char *query);
 
 #endif //DATABASE_DB_H
