@@ -3,6 +3,7 @@
 
 CMakeFiles/DataBase.dir/db.c.o: ../db.c
 
+CMakeFiles/DataBase.dir/main.c.o: ../db.c
 CMakeFiles/DataBase.dir/main.c.o: ../db.h
 CMakeFiles/DataBase.dir/main.c.o: ../main.c
 

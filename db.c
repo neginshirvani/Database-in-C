@@ -6,15 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 struct TableField {
     char field_name[10];
     char field_type;
 };
 
 
-struct data { /** data about indivisuals */
 
-};
 
 struct Property {  /** indivisuals */
     struct TableField * table_field;
@@ -31,6 +30,11 @@ struct Table {
     char table_name[20];
     struct Row* the_rows;
 };
+
+
+char prefix(const char *pre, const char *str) {
+    return strncmp(pre, str, strlen(pre)) == 0;
+}
 
 
 void printProperty(struct Property *p) {
@@ -67,59 +71,6 @@ struct Property* CreateThing() {
 };
 
 
-//struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata) {
-//    struct Property * new_property;
-//    strcpy(new_property->table_field->field_name, MyFieldName);
-//    if (new_property->table_field->field_type == 0)
-//        new_property->data = *(int *)(Mydata);
-//    else if(new_property->table_field->field_type == 1)
-//        new_property->data = *(char **)(Mydata);
-//
-//    new_property->next = NULL;
-//
-//    if(all->next == NULL)
-//        return new_property;
-//    if (strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
-//        new_property->next = all->properties->next;
-//    }
-//
-//    while (all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1) {
-//        all->properties = all->properties->next;
-//    }
-//
-//    new_property->next = all->properties->next;
-//    all->properties->next = new_property;
-//    return all;
-//}
-
-
-
-//struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata) {
-//
-//    struct Row* new_row;
-//    strcpy(new_row->properties->table_field->field_name, MyFieldName);
-//    if(all->properties->table_field->field_type == 0)
-//        new_row->properties->data = *(int *)(Mydata);
-//    else if(all->properties->table_field->field_type == 1)
-//        new_row->properties->data = *(char **)(Mydata);
-//
-//    new_row->next = NULL;
-//
-//    if(all->next == NULL)
-//        return new_row;
-//
-//    if(strcmp(all->properties->table_field->field_name, MyFieldName) == 1) {
-//        new_row->next = all;
-//        return new_row;
-//    }
-//
-//    while(all->next != NULL && strcmp(all->properties->table_field->field_name, MyFieldName) == -1)
-//        all = all->next;
-//
-//    new_row->next = all->next;
-//    all->next = new_row;
-//    return all;
-//};
 
 
 
@@ -136,51 +87,67 @@ struct Table* insert(struct Table* the_table, char *query) {
 
     NewTable->the_rows->next = the_table->the_rows->next;
     the_table->the_rows->next = NewTable;
-    return the_table;
+    printf("the table successfully added");
 
-    the_table->the_rows->next = NewTable->the_rows;
+    return the_table;
 
 }
 
-struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a data or a propert? */
 
-    if (all == NULL)
+
+struct Table* Deletee(struct Table* the_table, void *query) {
+
+    if(the_table == NULL)
         return NULL;
 
-    while(all->next != NULL) {
-        if(strcmp(all->properties->table_field->field_name, MyFieldName) == 0) {
-            struct Property * tmp;
-            tmp = all->properties->next->next;
-            free(all->properties->next);
-            all->properties->next = tmp;
+    while(the_table->the_rows->next != NULL) {
+        if(strcmp(the_table->the_rows->properties->data, query) == 0) {
+            struct Row* tmp;
+            tmp = the_table->the_rows->next->next;
+            free(the_table->the_rows->next);
+            the_table->the_rows->next = tmp;
         }
     }
 
-    return all;
-};
-
-
-struct Row* selectt (struct Row* all, void * data) {
-
-    if(all == NULL)
-        return NULL;
-
-    while (all->next != NULL && strcmp(all->properties->data, data) == 0) {
-        printProperty(all->properties);
-        all = all->next;
-    }
-
-};
-
-char prefix(const char *pre, const char *str){
-    return strncmp(pre, str, strlen(pre)) == 0;
+    return the_table;
 }
+
+//struct Row* deletee(struct Row* all, char * MyFieldName) { /** Does we delete a data or a propert? */
+//
+//    if (all == NULL)
+//        return NULL;
+//
+//    while(all->next != NULL) {
+//        if(strcmp(all->properties->table_field->field_name, MyFieldName) == 0) {
+//            struct Property * tmp;
+//            tmp = all->properties->next->next;
+//            free(all->properties->next);
+//            all->properties->next = tmp;
+//        }
+//    }
+//
+//    return all;
+//};
+
+
+struct Row* selectt (struct Table* the_table, void * query) {
+
+    if(the_table == NULL)
+        return NULL;
+    while(the_table->the_rows->properties->next != NULL && strcmp(the_table->the_rows->properties->data, query) == 0) {
+        printProperty(the_table->the_rows->properties->data);
+        the_table->the_rows->properties = the_table->the_rows->properties->next;
+    }
+    
+};
+
+//char prefix(const char *pre, const char *str);
 
 char *p1, *p2;
 
 struct Table* execcQuery(char *query){
     // starts with "insert"
-    int len = strlen(query);
+    //int len = strlen(query);
     struct Table * the_table;
 
     char temp[100];

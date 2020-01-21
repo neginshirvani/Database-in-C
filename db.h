@@ -8,19 +8,21 @@
 
 
 struct TableField;
-struct data;
+
 struct Property;
 struct Row;
+struct Table;
 void printProperty(struct Property *p);
-struct Row* CreatATable() ;
+struct Table* CreatATable() ;
 struct Property* CreateThing();
-struct Row* new_insrt(struct Row* all, char * MyFieldName, void * Mydata);
-struct Row* insert(struct Row* all, char * MyFieldName, void * Mydata);
-struct Row* deletee(struct Row* all, char * MyFieldName);
-struct Row* selectt (struct Row* all, void * data);
 
-char prefix(const char *pre, const char *str);
+//struct Row* deletee(struct Row* all, char * MyFieldName);
+struct Row* selectt (struct Row* all, void * data);
+struct Table* Deletee(struct Table* the_table, void *query);
+
+        char prefix(const char *pre, const char *str);
 
 struct Table* execcQuery(char *query);
+struct Table* insert(struct Table* the_table, char *query);
 
 #endif //DATABASE_DB_H

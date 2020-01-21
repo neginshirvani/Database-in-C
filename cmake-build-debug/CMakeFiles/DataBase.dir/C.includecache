@@ -14,3 +14,17 @@ stdlib.h
 string.h
 -
 
+/home/negin/CLionProjects/DataBase/db.h
+
+/home/negin/CLionProjects/DataBase/main.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+db.h
+/home/negin/CLionProjects/DataBase/db.h
+db.c
+/home/negin/CLionProjects/DataBase/db.c
+
