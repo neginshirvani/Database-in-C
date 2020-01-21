@@ -17,7 +17,7 @@ struct Table* CreatATable() ;
 struct Property* CreateThing();
 
 //struct Row* deletee(struct Row* all, char * MyFieldName);
-struct Row* selectt (struct Row* all, void * data);
+struct Row* selectt (struct Table* the_table, void * query);
 struct Table* Deletee(struct Table* the_table, void *query);
 
         char prefix(const char *pre, const char *str);

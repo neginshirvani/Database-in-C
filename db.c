@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "db.h"
 
 
 struct TableField {
@@ -75,8 +76,8 @@ struct Property* CreateThing() {
 
 
 struct Table* insert(struct Table* the_table, char *query) {
-    struct Table * execcQuery();
-    struct Table* NewTable = (struct Table*)malloc(sizeof(struct Table));
+    //struct Table * execcQuery();
+    struct Table* NewTable;
     NewTable = execcQuery(query);
 
     if(the_table->the_rows->next == NULL)
@@ -138,7 +139,7 @@ struct Row* selectt (struct Table* the_table, void * query) {
         printProperty(the_table->the_rows->properties->data);
         the_table->the_rows->properties = the_table->the_rows->properties->next;
     }
-    
+
 };
 
 //char prefix(const char *pre, const char *str);
