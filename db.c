@@ -286,6 +286,58 @@ struct Table* FindexeccQuery(struct Table *the_table ,char *query){
         }
     }
 
+    //return the_table;
+
+}
+
+struct Table* UpdatexeccQuery(struct Table *the_table ,char *query){
+
+    if (the_table == NULL) return NULL;
+
+
+    char temp[100];
+
+    if(prefix("UpdateTo", query)) {
+        p2 = p1 = query + 9;
+        while (*p2 != ' ') p2++;
+        char *table_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+        strncpy(table_name, p1, p2 - p1);
+
+        if (strcmp(the_table->table_name, table_name) == 0) {
+
+
+            //printf(table_name);
+
+            p2 = p1 = p2 + 1;
+            while (*p2) {
+                while (*p2 != '=') p2++;
+                char *field_name;
+                //for(int i = 0 ; i < p2; i++) {
+                field_name = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+                strncpy(field_name, p1, p2 - p1);
+                p2 = p1 = p2 + 1;
+
+                if (strcmp(the_table->the_rows->properties->table_field->field_name, field_name) == 0) {
+
+
+                    while (*p2 && *p2 != ',') p2++;
+                    char *data;
+
+                    data = (char *) malloc((p2 - p1 + 1) * sizeof(char));
+                    strncpy(data, p1, p2 - p1);
+
+                    if (strcmp(the_table->the_rows->properties->data, data) == 0) {
+                        strcpy(the_table->the_rows->properties->data, data);
+                    }
+
+                    if (*p2)
+                        p2 = p1 = p2 + 1;
+                }
+            }
+
+        }
+    }
+
     return the_table;
 
 }
