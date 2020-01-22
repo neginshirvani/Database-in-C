@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/negin/CLionProjects/DataBase/db.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-db.h
-/home/negin/CLionProjects/DataBase/db.h
-
 /home/negin/CLionProjects/DataBase/db.h
 
 /home/negin/CLionProjects/DataBase/main.c
@@ -27,6 +17,4 @@ string.h
 -
 db.h
 /home/negin/CLionProjects/DataBase/db.h
-db.c
-/home/negin/CLionProjects/DataBase/db.c
 
